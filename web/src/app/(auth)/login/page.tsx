@@ -1,0 +1,14 @@
+import LoginForm from "@/app/ui/auth/login-form";
+import AuthCard from "@/app/ui/auth/auth-card";
+
+export default function LoginPage() {
+	return (
+		<AuthCard
+			title="Sign in"
+			linkHref="/register"
+			linkText="Don't have an account? Sign up"
+		>
+			<LoginForm />
+		</AuthCard>
+	);
+}

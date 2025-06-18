@@ -1,0 +1,78 @@
+import {
+	Body,
+	Controller,
+	HttpCode,
+	Post,
+	Res,
+	UseGuards,
+} from "@nestjs/common";
+import { Response } from "express";
+import { AuthService } from "./auth.service";
+import { LoginDto, RegisterDto } from "./dto/auth.dto";
+import { RefreshJwtGuard } from "./guards/refresh-jwt.guard";
+import { ConfigService } from "@nestjs/config";
+import { TimeUtils } from "./constants/time.constants";
+
+@Controller("auth")
+export class AuthController {
+	constructor(
+		private readonly authService: AuthService,
+		private readonly configService: ConfigService,
+	) {}
+
+	private setCookies(res: Response, access: string, refresh: string) {
+		const isProduction = this.configService.get("NODE_ENV") === "production";
+
+		res.cookie("access_token", access, {
+			httpOnly: true,
+			secure: true,
+			sameSite: isProduction ? "lax" : "none",
+			maxAge: TimeUtils.minutesToMs(
+				this.configService.get<number>("JWT_ACCESS_EXPIRES_IN_MIN", 15),
+			),
+		});
+
+		res.cookie("refresh_token", refresh, {
+			httpOnly: true,
+			secure: true,
+			sameSite: isProduction ? "strict" : "none",
+			maxAge: TimeUtils.daysToMs(
+				this.configService.get<number>("JWT_REFRESH_EXPIRES_IN_DAYS", 7),
+			),
+		});
+	}
+
+	@Post("register")
+	async register(
+		@Body() dto: RegisterDto,
+		@Res({ passthrough: true }) res: Response,
+	) {
+		const { user, access, refresh } = await this.authService.register(dto);
+		this.setCookies(res, access, refresh);
+		return { user };
+	}
+
+	@Post("login")
+	@HttpCode(200)
+	async login(
+		@Body() dto: LoginDto,
+		@Res({ passthrough: true }) res: Response,
+	) {
+		const { user, access, refresh } = await this.authService.login(
+			dto.email,
+			dto.password,
+		);
+		this.setCookies(res, access, refresh);
+		return { user };
+	}
+
+	@Post("refresh")
+	@HttpCode(200)
+	@UseGuards(RefreshJwtGuard)
+	async refresh(@Res({ passthrough: true }) res: Response) {
+		const { access, refresh } = await this.authService.signTokens(
+			res.locals.userId,
+		);
+		this.setCookies(res, access, refresh);
+	}
+}
