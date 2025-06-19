@@ -1,5 +1,5 @@
-import LoginForm from "@/app/ui/auth/login-form";
-import AuthCard from "@/app/ui/auth/auth-card";
+import { LoginForm } from "@/app/ui/auth/login-form";
+import { AuthCard } from "@/app/ui/auth/auth-card";
 
 export default function LoginPage() {
 	return (

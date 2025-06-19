@@ -1,7 +1,6 @@
 generator client {
-  provider = "prisma-client-js"
-	binaryTargets = ["native", "linux-musl-arm64-openssl-3.0.x"]
-  output   = "../generated/prisma"
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "linux-musl-arm64-openssl-3.0.x"]
 }
 
 datasource db {
@@ -10,9 +9,34 @@ datasource db {
 }
 
 model User {
-  id       Int    @id @default(autoincrement())
-  email    String @unique
-  password String
-  role     String
-  createdAt DateTime @default(now())
+  id        Int       @id @default(autoincrement())
+  name      String
+  surname   String
+  email     String    @unique
+  password  String
+  role      UserRole
+  createdAt DateTime  @default(now())
+  articles  Article[]
+}
+
+model Article {
+  id           Int         @id @default(autoincrement())
+  title        String
+  content      String
+  previewImage String
+  type         ArticleType
+  createdAt    DateTime    @default(now())
+  author       User        @relation(fields: [authorId], references: [id])
+  authorId     Int
+}
+
+enum UserRole {
+  READER
+  AUTHOR
+}
+
+enum ArticleType {
+  ANALYTICS
+  NEWS
+  OTHER
 }

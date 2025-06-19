@@ -6,13 +6,13 @@ import FormInput from "@/app/ui/auth/form-input";
 import FormSelect from "@/app/ui/auth/form-select";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { registerSchema } from "@/app/lib/schemas/register/validation";
-import type { TRegisterForm } from "@/app/types/auth";
+import { UserRole, type TRegisterForm } from "@/types/auth";
 import { register as registerApi } from "@/app/lib/api/auth";
 import styles from "./styles.module.css";
 import { useRouter } from "next/navigation";
 import { toaster } from "@/app/ui/toaster";
 
-export default function RegisterForm() {
+export const RegisterForm = () => {
 	const router = useRouter();
 	const {
 		handleSubmit,
@@ -25,7 +25,7 @@ export default function RegisterForm() {
 	const onSubmit: SubmitHandler<TRegisterForm> = async (values) => {
 		try {
 			await registerApi(values);
-			router.push("/");
+			router.push("/articles");
 		} catch (error) {
 			toaster.create({
 				title: (error as Error).message ?? "Invalid credentials",
@@ -36,6 +36,22 @@ export default function RegisterForm() {
 
 	return (
 		<form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+			<FormInput<TRegisterForm>
+				label="Name"
+				name="name"
+				type="text"
+				placeholder="John"
+				register={register}
+				error={errors.name}
+			/>
+			<FormInput<TRegisterForm>
+				label="Surname"
+				name="surname"
+				type="text"
+				placeholder="Doe"
+				register={register}
+				error={errors.surname}
+			/>
 			<FormInput<TRegisterForm>
 				label="Email"
 				name="email"
@@ -57,8 +73,8 @@ export default function RegisterForm() {
 				name="role"
 				register={register}
 				options={[
-					{ value: "author", label: "Author" },
-					{ value: "reader", label: "Reader" },
+					{ value: UserRole.AUTHOR, label: "Author" },
+					{ value: UserRole.READER, label: "Reader" },
 				]}
 				error={errors.role}
 			/>
@@ -73,4 +89,4 @@ export default function RegisterForm() {
 			</Button>
 		</form>
 	);
-}
+};

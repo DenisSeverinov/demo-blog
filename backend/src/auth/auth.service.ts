@@ -4,8 +4,6 @@ import { PrismaService } from "src/prisma/prisma.service";
 import { RegisterDto } from "./dto/auth.dto";
 import { ConfigService } from "@nestjs/config";
 import * as bcrypt from "bcrypt";
-import { plainToInstance } from "class-transformer";
-import { UserResponseDto } from "./dto/user-response.dto";
 
 @Injectable()
 export class AuthService {
@@ -15,17 +13,16 @@ export class AuthService {
 		private readonly configService: ConfigService,
 	) {}
 
-	async register({ email, password, role }: RegisterDto) {
+	async register({ email, password, role, name, surname }: RegisterDto) {
 		const hashed = await bcrypt.hash(password, 10);
 
 		const user = await this.prismaService.user.create({
-			data: { email, password: hashed, role },
+			data: { email, password: hashed, role, name, surname },
 		});
 
-		const userDto = plainToInstance(UserResponseDto, user);
 		const { access, refresh } = await this.signTokens(user.id);
 
-		return { user: userDto, access, refresh };
+		return { access, refresh };
 	}
 
 	async login(email: string, password: string) {
@@ -37,14 +34,26 @@ export class AuthService {
 			throw new UnauthorizedException("Invalid credentials");
 		}
 
-		const userDto = plainToInstance(UserResponseDto, user);
 		const { access, refresh } = await this.signTokens(user.id);
 
-		return { user: userDto, access, refresh };
+		return { access, refresh };
 	}
 
 	async signTokens(userId: number) {
-		const payload = { sub: userId };
+		const user = await this.prismaService.user.findUnique({
+			where: { id: userId },
+			include: { articles: true },
+		});
+
+		const payload = {
+			id: userId,
+			name: user.name,
+			surname: user.surname,
+			email: user.email,
+			role: user.role,
+			createdAt: user.createdAt,
+			articles: user.articles,
+		};
 
 		const [access, refresh] = await Promise.all([
 			this.jwtService.signAsync(payload),

@@ -3,7 +3,7 @@ import { AppModule } from "./app.module";
 import * as cookieParser from "cookie-parser";
 import { ValidationPipe } from "@nestjs/common";
 import { MainExceptionFilter } from "./shared/filters/main-exception.filter";
-import { PrismaClientExceptionFilter } from "./shared/filters/prisma-exception.filters";
+import { PrismaClientKnownExceptionFilter } from "./shared/filters/prisma-exception.filters";
 
 async function bootstrap() {
 	const app = await NestFactory.create(AppModule);
@@ -12,7 +12,7 @@ async function bootstrap() {
 	const { httpAdapter } = app.get(HttpAdapterHost);
 	app.useGlobalFilters(
 		new MainExceptionFilter(),
-		new PrismaClientExceptionFilter(httpAdapter),
+		new PrismaClientKnownExceptionFilter(httpAdapter),
 	);
 	app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
 	await app.listen(process.env.SERVER_PORT || 8080);

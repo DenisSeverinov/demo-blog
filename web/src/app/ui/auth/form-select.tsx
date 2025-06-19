@@ -66,7 +66,7 @@ export default function FormSelect<T extends FieldValues>({
 				</Portal>
 			</Select.Root>
 
-			<FormErrorMessage fontSize="sm" color="red">
+			<FormErrorMessage fontSize="small" color="red">
 				{error?.message}
 			</FormErrorMessage>
 		</FormControl>

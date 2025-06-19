@@ -1,3 +1,4 @@
+import { ERROR_CODES } from "./constants";
 import {
 	ArgumentsHost,
 	Catch,
@@ -5,12 +6,15 @@ import {
 	NotFoundException,
 } from "@nestjs/common";
 import { BaseExceptionFilter } from "@nestjs/core";
-import { Prisma } from "../../../generated/prisma";
-import { ERROR_CODES } from "./constants";
+import { Prisma } from "@prisma/client";
 
 @Catch(Prisma.PrismaClientKnownRequestError)
-export class PrismaClientExceptionFilter extends BaseExceptionFilter {
-	catch(exception: Prisma.PrismaClientKnownRequestError, host: ArgumentsHost) {
+export class PrismaClientKnownExceptionFilter extends BaseExceptionFilter {
+	catch(
+		exception: Prisma.PrismaClientKnownRequestError,
+		host: ArgumentsHost,
+	): void {
+		console.error("PrismaClientKnownRequestError", { exception });
 		let error: Error = exception;
 
 		switch (exception.code) {

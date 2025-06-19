@@ -5,13 +5,13 @@ import { Button } from "@chakra-ui/react";
 import FormInput from "@/app/ui/auth/form-input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema } from "@/app/lib/schemas/login/validation";
-import type { TLoginForm } from "@/app/types/auth";
+import type { TLoginForm } from "@/types/auth";
 import styles from "./styles.module.css";
 import { login } from "@/app/lib/api/auth";
 import { useRouter } from "next/navigation";
 import { toaster } from "@/app/ui/toaster";
 
-export default function LoginForm() {
+export const LoginForm = () => {
 	const router = useRouter();
 	const {
 		handleSubmit,
@@ -24,7 +24,7 @@ export default function LoginForm() {
 	const onSubmit: SubmitHandler<TLoginForm> = async (values) => {
 		try {
 			await login(values);
-			router.push("/");
+			router.push("/articles");
 		} catch (error) {
 			toaster.create({
 				title: (error as Error).message ?? "Invalid credentials",
@@ -62,4 +62,4 @@ export default function LoginForm() {
 			</Button>
 		</form>
 	);
-}
+};

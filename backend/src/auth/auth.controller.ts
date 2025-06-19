@@ -1,8 +1,9 @@
 import {
 	Body,
 	Controller,
-	HttpCode,
+	Get,
 	Post,
+	Req,
 	Res,
 	UseGuards,
 } from "@nestjs/common";
@@ -12,6 +13,8 @@ import { LoginDto, RegisterDto } from "./dto/auth.dto";
 import { RefreshJwtGuard } from "./guards/refresh-jwt.guard";
 import { ConfigService } from "@nestjs/config";
 import { TimeUtils } from "./constants/time.constants";
+import { JwtAuthGuard } from "./guards/jwt.guard";
+import { User } from "@prisma/client";
 
 @Controller("auth")
 export class AuthController {
@@ -47,32 +50,43 @@ export class AuthController {
 		@Body() dto: RegisterDto,
 		@Res({ passthrough: true }) res: Response,
 	) {
-		const { user, access, refresh } = await this.authService.register(dto);
+		const { access, refresh } = await this.authService.register(dto);
 		this.setCookies(res, access, refresh);
-		return { user };
+		return { success: true };
 	}
 
 	@Post("login")
-	@HttpCode(200)
 	async login(
 		@Body() dto: LoginDto,
 		@Res({ passthrough: true }) res: Response,
 	) {
-		const { user, access, refresh } = await this.authService.login(
+		const { access, refresh } = await this.authService.login(
 			dto.email,
 			dto.password,
 		);
 		this.setCookies(res, access, refresh);
-		return { user };
+		return { success: true };
 	}
 
 	@Post("refresh")
-	@HttpCode(200)
 	@UseGuards(RefreshJwtGuard)
 	async refresh(@Res({ passthrough: true }) res: Response) {
 		const { access, refresh } = await this.authService.signTokens(
 			res.locals.userId,
 		);
 		this.setCookies(res, access, refresh);
+	}
+
+	@Get("me")
+	@UseGuards(JwtAuthGuard)
+	getMe(@Req() req: { user: User }) {
+		return req.user;
+	}
+
+	@Post("logout")
+	logout(@Res({ passthrough: true }) res: Response) {
+		res.clearCookie("access_token");
+		res.clearCookie("refresh_token");
+		return { success: true };
 	}
 }

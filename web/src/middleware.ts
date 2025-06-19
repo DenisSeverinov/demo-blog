@@ -34,7 +34,7 @@ const tryRefresh = async (
 
 const attachCookies = (cookies: string[]): NextResponse => {
 	const res = NextResponse.next();
-	for (const c of cookies) res.headers.append("Set-Cookie", c);
+	for (const cookie of cookies) res.headers.append("Set-Cookie", cookie);
 	return res;
 };
 
@@ -45,8 +45,11 @@ export async function middleware(req: NextRequest) {
 	const accessToken = req.cookies.get(ACCESS_COOKIE)?.value;
 
 	if (await isAccessValid(accessToken)) {
+		if (pathname === "/") {
+			return NextResponse.redirect(new URL("/articles", req.url));
+		}
 		return isPublicPath(pathname)
-			? NextResponse.redirect(new URL("/", req.url))
+			? NextResponse.redirect(new URL("/articles", req.url))
 			: NextResponse.next();
 	}
 

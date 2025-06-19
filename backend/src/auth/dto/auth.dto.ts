@@ -1,7 +1,16 @@
+import { UserRole } from "@prisma/client";
 import { IsEmail, IsString, MinLength, IsIn } from "class-validator";
 import { Trim } from "src/shared/transformers/trim.transformer";
 
 export class RegisterDto {
+	@IsString()
+	@Trim()
+	name: string;
+
+	@IsString()
+	@Trim()
+	surname: string;
+
 	@IsEmail()
 	@Trim()
 	email: string;
@@ -12,8 +21,8 @@ export class RegisterDto {
 	password: string;
 
 	@IsString()
-	@IsIn(["reader", "author"])
-	role: "reader" | "author";
+	@IsIn(Object.values(UserRole))
+	role: UserRole;
 }
 
 export class LoginDto {

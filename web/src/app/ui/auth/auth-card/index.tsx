@@ -11,12 +11,12 @@ type TAuthCardProps = {
 	children: React.ReactNode;
 };
 
-export default function AuthCard({
+export const AuthCard = ({
 	title,
 	linkHref,
 	linkText,
 	children,
-}: TAuthCardProps) {
+}: TAuthCardProps) => {
 	return (
 		<AuthWrapper>
 			<Heading mb={6} size="xl" textAlign="center">
@@ -29,4 +29,4 @@ export default function AuthCard({
 			<Toaster />
 		</AuthWrapper>
 	);
-}
+};
