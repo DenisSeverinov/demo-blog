@@ -5,7 +5,7 @@ import {
 	FormErrorMessage,
 	FormLabel,
 } from "@chakra-ui/form-control";
-import { Portal, Select, createListCollection } from "@chakra-ui/react";
+import { Select, createListCollection } from "@chakra-ui/react";
 import { useMemo } from "react";
 import type {
 	UseFormRegister,
@@ -38,7 +38,9 @@ export default function FormSelect<T extends FieldValues>({
 
 	return (
 		<FormControl isInvalid={!!error} mb={4}>
-			<FormLabel htmlFor={name}>{label}</FormLabel>
+			<FormLabel htmlFor={name} pb={4}>
+				{label}
+			</FormLabel>
 
 			<Select.Root collection={collection} size="sm">
 				<Select.HiddenSelect {...register(name)} />
@@ -51,19 +53,16 @@ export default function FormSelect<T extends FieldValues>({
 						<Select.Indicator />
 					</Select.IndicatorGroup>
 				</Select.Control>
-
-				<Portal>
-					<Select.Positioner>
-						<Select.Content>
-							{collection.items.map((item) => (
-								<Select.Item item={item} key={item.value}>
-									{item.label}
-									<Select.ItemIndicator />
-								</Select.Item>
-							))}
-						</Select.Content>
-					</Select.Positioner>
-				</Portal>
+				<Select.Positioner zIndex="modal">
+					<Select.Content>
+						{collection.items.map((item) => (
+							<Select.Item item={item} key={item.value}>
+								{item.label}
+								<Select.ItemIndicator />
+							</Select.Item>
+						))}
+					</Select.Content>
+				</Select.Positioner>
 			</Select.Root>
 
 			<FormErrorMessage fontSize="small" color="red">

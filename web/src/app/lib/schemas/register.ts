@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { loginSchema } from "../login/validation";
+import { loginSchema } from "./login";
 import { UserRole } from "@/types/auth";
 
 export const registerSchema = loginSchema.extend({

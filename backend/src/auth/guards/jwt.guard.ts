@@ -8,15 +8,15 @@ export interface JwtUser {
 
 @Injectable()
 export class JwtAuthGuard extends AuthGuard("jwt") {
-	override handleRequest<TUser = JwtUser>(
+	override handleRequest<JwtUser>(
 		err: unknown,
 		user: unknown,
 		_info: unknown,
 		_ctx: ExecutionContext,
 		_status?: unknown,
-	): TUser {
+	): JwtUser {
 		if (!user) throw new AuthException();
 		if (err instanceof Error) throw err;
-		return user as TUser;
+		return user as JwtUser;
 	}
 }

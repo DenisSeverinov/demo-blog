@@ -2,9 +2,9 @@
 
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { Button } from "@chakra-ui/react";
-import FormInput from "@/app/ui/auth/form-input";
+import FormInput from "@/app/ui/form-input";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { loginSchema } from "@/app/lib/schemas/login/validation";
+import { loginSchema } from "@/app/lib/schemas/login";
 import type { TLoginForm } from "@/types/auth";
 import styles from "./styles.module.css";
 import { login } from "@/app/lib/api/auth";

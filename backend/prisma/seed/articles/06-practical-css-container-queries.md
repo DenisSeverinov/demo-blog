@@ -1,5 +1,3 @@
-# Practical CSS Container Queries
-
 Container Queries bring component‑first responsive design to CSS.
 
 ## Basic Syntax

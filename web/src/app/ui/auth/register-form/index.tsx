@@ -2,15 +2,20 @@
 
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { Button } from "@chakra-ui/react";
-import FormInput from "@/app/ui/auth/form-input";
-import FormSelect from "@/app/ui/auth/form-select";
+import FormInput from "@/app/ui/form-input";
+import FormSelect from "@/app/ui/form-select";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { registerSchema } from "@/app/lib/schemas/register/validation";
+import { registerSchema } from "@/app/lib/schemas/register";
 import { UserRole, type TRegisterForm } from "@/types/auth";
 import { register as registerApi } from "@/app/lib/api/auth";
 import styles from "./styles.module.css";
 import { useRouter } from "next/navigation";
 import { toaster } from "@/app/ui/toaster";
+
+const options = [
+	{ value: UserRole.AUTHOR, label: "Author" },
+	{ value: UserRole.READER, label: "Reader" },
+];
 
 export const RegisterForm = () => {
 	const router = useRouter();
@@ -35,7 +40,7 @@ export const RegisterForm = () => {
 	};
 
 	return (
-		<form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+		<form className={styles.form} onSubmit={handleSubmit(onSubmit)} noValidate>
 			<FormInput<TRegisterForm>
 				label="Name"
 				name="name"
@@ -72,10 +77,7 @@ export const RegisterForm = () => {
 				label="Role"
 				name="role"
 				register={register}
-				options={[
-					{ value: UserRole.AUTHOR, label: "Author" },
-					{ value: UserRole.READER, label: "Reader" },
-				]}
+				options={options}
 				error={errors.role}
 			/>
 			<Button

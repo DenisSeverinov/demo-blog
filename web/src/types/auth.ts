@@ -1,6 +1,6 @@
 import type { z } from "zod";
-import type { loginSchema } from "@/app/lib/schemas/login/validation";
-import type { registerSchema } from "@/app/lib/schemas/register/validation";
+import type { loginSchema } from "@/app/lib/schemas/login";
+import type { registerSchema } from "@/app/lib/schemas/register";
 import type { TArticle } from "./article";
 
 export type TLoginForm = z.infer<typeof loginSchema>;
@@ -19,4 +19,9 @@ export type TUser = {
 	role: UserRole;
 	createdAt: Date;
 	articles?: TArticle[];
+};
+
+export type JwtPayload = {
+	userId: number;
+	role: UserRole;
 };

@@ -1,5 +1,3 @@
-# Deploying Next.js at Scale – Best Practices
-
 Deploying **Next.js** at scale involves careful attention to build times, image optimization, and edge infrastructure. As your application grows, these considerations become critical for maintaining performance and developer experience.
 
 ## Key Topics

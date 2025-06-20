@@ -1,4 +1,4 @@
-import { getArticleById } from "@/app/lib/api/article";
+import { getArticleById } from "@/app/lib/api/article/server";
 import { Article } from "@/app/ui/articles/article";
 import dayjs from "dayjs";
 

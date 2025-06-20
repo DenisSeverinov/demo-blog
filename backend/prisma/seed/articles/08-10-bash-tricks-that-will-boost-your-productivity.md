@@ -1,5 +1,3 @@
-# 10 Bash Tricks That Will Boost Your Productivity
-
 Bash is more than just a command shell—it's a powerful scripting language with features that can dramatically speed up your daily workflow. Here are ten essential techniques that every developer should master.
 
 ## 1. Brace Expansion

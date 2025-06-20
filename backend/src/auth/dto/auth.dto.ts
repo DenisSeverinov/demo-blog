@@ -35,3 +35,8 @@ export class LoginDto {
 	@Trim()
 	password: string;
 }
+
+export interface JwtPayload {
+	userId: number;
+	role: UserRole;
+}

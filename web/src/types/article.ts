@@ -1,4 +1,8 @@
 import type { TUser } from "./auth";
+import type { z } from "zod";
+import type { createArticleSchema } from "@/app/lib/schemas/article";
+
+export type TCreateArticleForm = z.infer<typeof createArticleSchema>;
 
 export enum ArticleType {
 	ANALYTICS = "ANALYTICS",
@@ -19,7 +23,6 @@ export type TArticle = {
 	previewImage: string;
 	type: ArticleType;
 	createdAt: Date;
-	createdAtFormatted: string;
 	authorId: number;
 	author: Pick<TUser, "name" | "surname">;
 };

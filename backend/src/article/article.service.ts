@@ -5,8 +5,16 @@ import { CreateArticleDto } from "./dto/create-article.dto";
 @Injectable()
 export class ArticleService {
 	constructor(private readonly PrismaService: PrismaService) {}
-	create(_createArticleDto: CreateArticleDto) {
-		return "This action adds a new article";
+	create(
+		createArticleDto: CreateArticleDto & { previewImage: string },
+		userId: number,
+	) {
+		return this.PrismaService.article.create({
+			data: {
+				...createArticleDto,
+				authorId: userId,
+			},
+		});
 	}
 
 	findAll() {
@@ -25,7 +33,7 @@ export class ArticleService {
 	async findAllPreview(search: string) {
 		const articles = await this.PrismaService.article.findMany({
 			where: {
-				title: { contains: search, mode: "insensitive" },
+				OR: [{ title: { contains: search, mode: "insensitive" } }],
 			},
 			include: {
 				author: {
@@ -54,10 +62,6 @@ export class ArticleService {
 				},
 			},
 		});
-	}
-
-	remove(id: number) {
-		return this.PrismaService.article.delete({ where: { id } });
 	}
 
 	private stripMarkdown(md: string): string {

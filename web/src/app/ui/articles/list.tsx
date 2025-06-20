@@ -1,14 +1,15 @@
-"use client";
-
 import { Box, SimpleGrid } from "@chakra-ui/react";
-import { ArticleCard } from "./card";
-import type { TArticle } from "@/types/article";
-import { EmptyList } from "../empty-list";
 import { LuSearch } from "react-icons/lu";
+import { ArticleCard } from "./card";
+import { EmptyList } from "../empty-list";
+import { getArticlesPreview } from "@/app/lib/api/article/server";
+import dayjs from "dayjs";
 
-type TArticleListProps = { articles: TArticle[] };
+type TArticleListProps = { query: string };
 
-export const ArticleList = ({ articles }: TArticleListProps) => {
+export const ArticleList = async ({ query }: TArticleListProps) => {
+	const articles = await getArticlesPreview(query);
+
 	if (articles.length === 0) {
 		return (
 			<Box>
@@ -20,11 +21,19 @@ export const ArticleList = ({ articles }: TArticleListProps) => {
 			</Box>
 		);
 	}
+
 	return (
-		<SimpleGrid columns={{ base: 1, sm: 2, xl: 3 }} gap={{ base: 8, md: 10 }}>
-			{articles.map((article) => (
-				<ArticleCard key={article.id} article={article} />
-			))}
+		<SimpleGrid columns={{ sm: 2, xl: 3 }} gap={{ base: 8, md: 10 }}>
+			{articles.map((article) => {
+				const articleWithFormattedDate = {
+					...article,
+					createdAtFormatted: dayjs(article.createdAt).format("MMMM D, YYYY"),
+				};
+
+				return (
+					<ArticleCard key={article.id} article={articleWithFormattedDate} />
+				);
+			})}
 		</SimpleGrid>
 	);
 };

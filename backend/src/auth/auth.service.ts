@@ -42,28 +42,20 @@ export class AuthService {
 	async signTokens(userId: number) {
 		const user = await this.prismaService.user.findUnique({
 			where: { id: userId },
-			include: { articles: true },
 		});
 
-		const payload = {
-			id: userId,
-			name: user.name,
-			surname: user.surname,
-			email: user.email,
-			role: user.role,
-			createdAt: user.createdAt,
-			articles: user.articles,
-		};
-
 		const [access, refresh] = await Promise.all([
-			this.jwtService.signAsync(payload),
-			this.jwtService.signAsync(payload, {
-				secret: this.configService.get<string>("JWT_REFRESH_SECRET"),
-				expiresIn: `${this.configService.get<number>(
-					"JWT_REFRESH_EXPIRES_IN_DAYS",
-					7,
-				)}d`,
-			}),
+			this.jwtService.signAsync({ userId, role: user.role }),
+			this.jwtService.signAsync(
+				{ userId },
+				{
+					secret: this.configService.get<string>("JWT_REFRESH_SECRET"),
+					expiresIn: `${this.configService.get<number>(
+						"JWT_REFRESH_EXPIRES_IN_DAYS",
+						7,
+					)}d`,
+				},
+			),
 		]);
 
 		return { access, refresh };

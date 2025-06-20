@@ -1,34 +1,30 @@
 "use client";
 
 import { Input } from "@chakra-ui/react";
-import { useRouter, useSearchParams } from "next/navigation";
-import { useCallback, useRef } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useDebouncedCallback } from "use-debounce";
 
 export function SearchBox() {
-	const router = useRouter();
-	const params = useSearchParams();
-	const current = params.get("q") ?? "";
-	const timer = useRef<NodeJS.Timeout | null>(null);
+	const searchParams = useSearchParams();
+	const pathname = usePathname();
+	const { replace } = useRouter();
 
-	const handleChange = useCallback(
-		(v: string) => {
-			if (timer.current) {
-				clearTimeout(timer.current);
-			}
-			timer.current = setTimeout(() => {
-				const url = v ? `?q=${encodeURIComponent(v)}` : "/";
-				router.replace(url); // ⬅️  навигация без полной перезагрузки
-			}, 300);
-		},
-		[router],
-	);
+	const handleSearch = useDebouncedCallback((value: string) => {
+		const params = new URLSearchParams(searchParams);
+		if (value) {
+			params.set("query", value);
+		} else {
+			params.delete("query");
+		}
+		replace(`${pathname}?${params.toString()}`);
+	}, 300);
 
 	return (
 		<Input
 			placeholder="Search articles…"
 			size="lg"
-			defaultValue={current}
-			onChange={(e) => handleChange(e.target.value)}
+			onChange={(event) => handleSearch(event.target.value)}
+			defaultValue={searchParams.get("query")?.toString()}
 		/>
 	);
 }

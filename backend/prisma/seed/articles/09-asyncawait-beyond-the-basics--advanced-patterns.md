@@ -1,5 +1,3 @@
-# Async/Await Beyond the Basics: Advanced Patterns
-
 `async/await` simplifies promise-based code, but its true power lies in advanced orchestration patterns that can handle complex asynchronous workflows. Let's explore sophisticated techniques that go beyond simple `await` statements.
 
 ## 1. Parallel vs Sequential Execution

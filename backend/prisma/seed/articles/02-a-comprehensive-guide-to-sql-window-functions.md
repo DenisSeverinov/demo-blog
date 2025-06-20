@@ -1,7 +1,3 @@
-# A Comprehensive Guide to SQL Window Functions
-
-> _Random insight article #2_
-
 SQL **window functions** let you perform calculations across a set of table rows that are somehow related to the current row. These powerful functions enable you to perform complex analytical queries without the need for self-joins or subqueries.
 
 ## When to Use Window Functions

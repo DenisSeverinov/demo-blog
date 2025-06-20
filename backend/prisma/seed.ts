@@ -32,6 +32,18 @@ const surnames = [
 	"Martinez",
 ];
 
+const articleTitles = [
+	"Understanding JavaScript Closures: A Deep Dive",
+	"A Comprehensive Guide to SQL Window Functions",
+	"Deploying Next.js at Scale: Best Practices",
+	"Mastering Git Rebase Without Fear",
+	"PostgreSQL Index Types Explained: B-tree, GIN, BRIN",
+	"Practical CSS Container Queries",
+	"JWT Security Best Practices for Modern APIs",
+	"10 Bash Tricks That Will Boost Your Productivity",
+	"Async/Await Beyond the Basics: Advanced Patterns",
+];
+
 async function main() {
 	const already = await prisma.article.count();
 	if (already > 0) {
@@ -66,7 +78,8 @@ async function main() {
 	let idx = 0;
 	for (const file of files) {
 		const markdown = readFileSync(path.join(ARTICLES_DIR, file), "utf8");
-		const title = markdown.split("\n")[0].replace(/^#\s*/, "");
+		const title =
+			articleTitles[idx] || markdown.split("\n")[0].replace(/^#\s*/, "");
 
 		const type =
 			idx % 3 === 0

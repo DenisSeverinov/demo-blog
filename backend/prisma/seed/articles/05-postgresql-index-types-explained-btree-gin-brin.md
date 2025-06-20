@@ -1,5 +1,3 @@
-# PostgreSQL Index Types Explained: BTREE, GIN, BRIN
-
 PostgreSQL ships with multiple index types, each optimized for specific query patterns. Understanding when to use each type can dramatically improve your database performance.
 
 ## Index Types Overview

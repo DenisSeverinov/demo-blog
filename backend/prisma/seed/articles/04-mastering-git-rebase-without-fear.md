@@ -1,5 +1,3 @@
-# Mastering Git Rebase Without Fear
-
 `git rebase` rewrites commit history so your feature branch sits on top of its upstream branch as if it were created from there. While it can seem intimidating, understanding when and how to use it will make your Git workflow much cleaner.
 
 ## Interactive Rebase Workflow

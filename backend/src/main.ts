@@ -7,7 +7,7 @@ import { PrismaClientKnownExceptionFilter } from "./shared/filters/prisma-except
 
 async function bootstrap() {
 	const app = await NestFactory.create(AppModule);
-	app.setGlobalPrefix("api/v1");
+	app.setGlobalPrefix(process.env.API_PREFIX || "/api/v1");
 	app.use(cookieParser());
 	const { httpAdapter } = app.get(HttpAdapterHost);
 	app.useGlobalFilters(

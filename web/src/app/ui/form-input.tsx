@@ -3,7 +3,7 @@ import {
 	FormLabel,
 	FormErrorMessage,
 } from "@chakra-ui/form-control";
-import { Input } from "@chakra-ui/react";
+import { Input, Textarea } from "@chakra-ui/react";
 import type {
 	FieldError,
 	UseFormRegister,
@@ -18,6 +18,7 @@ export type TFormInputProps<T extends FieldValues> = {
 	type?: string;
 	placeholder?: string;
 	error?: FieldError;
+	accept?: string;
 };
 
 export default function FormInput<T extends FieldValues>({
@@ -27,16 +28,24 @@ export default function FormInput<T extends FieldValues>({
 	type = "text",
 	placeholder,
 	error,
+	accept,
 }: TFormInputProps<T>) {
 	return (
 		<FormControl isInvalid={!!error} mb={4}>
-			<FormLabel htmlFor={name}>{label}</FormLabel>
-			<Input
-				id={name}
-				type={type}
-				placeholder={placeholder}
-				{...register(name)}
-			/>
+			<FormLabel htmlFor={name} pb={4}>
+				{label}
+			</FormLabel>
+			{type === "textarea" ? (
+				<Textarea id={name} placeholder={placeholder} {...register(name)} />
+			) : (
+				<Input
+					id={name}
+					type={type}
+					placeholder={placeholder}
+					accept={accept}
+					{...register(name)}
+				/>
+			)}
 			<FormErrorMessage fontSize="small" color="red">
 				{error?.message}
 			</FormErrorMessage>

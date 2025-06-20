@@ -1,12 +1,4 @@
-import {
-	Body,
-	Controller,
-	Get,
-	Post,
-	Req,
-	Res,
-	UseGuards,
-} from "@nestjs/common";
+import { Body, Controller, Post, Res, UseGuards } from "@nestjs/common";
 import { Response } from "express";
 import { AuthService } from "./auth.service";
 import { LoginDto, RegisterDto } from "./dto/auth.dto";
@@ -14,7 +6,6 @@ import { RefreshJwtGuard } from "./guards/refresh-jwt.guard";
 import { ConfigService } from "@nestjs/config";
 import { TimeUtils } from "./constants/time.constants";
 import { JwtAuthGuard } from "./guards/jwt.guard";
-import { User } from "@prisma/client";
 
 @Controller("auth")
 export class AuthController {
@@ -75,15 +66,11 @@ export class AuthController {
 			res.locals.userId,
 		);
 		this.setCookies(res, access, refresh);
-	}
-
-	@Get("me")
-	@UseGuards(JwtAuthGuard)
-	getMe(@Req() req: { user: User }) {
-		return req.user;
+		return { success: true };
 	}
 
 	@Post("logout")
+	@UseGuards(JwtAuthGuard)
 	logout(@Res({ passthrough: true }) res: Response) {
 		res.clearCookie("access_token");
 		res.clearCookie("refresh_token");

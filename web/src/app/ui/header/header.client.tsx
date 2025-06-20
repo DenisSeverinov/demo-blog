@@ -4,15 +4,16 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Box, Flex, Button } from "@chakra-ui/react";
-import type { TUser } from "@/types/auth";
+import { UserRole, type JwtPayload } from "@/types/auth";
 import { logout } from "@/app/lib/api/auth";
 import { useRouter } from "next/navigation";
 import { toaster } from "@/app/ui/toaster";
+import { ArticleModal } from "@/app/ui/articles/modal";
 
-type THeaderClientProps = { user: TUser | null };
+type THeaderClientProps = { user: JwtPayload | null };
 
 export const HeaderClient = ({ user }: THeaderClientProps) => {
-	const [_open, setOpen] = useState(false);
+	const [isOpen, setIsOpen] = useState(false);
 	const router = useRouter();
 
 	const handleLogout = async () => {
@@ -65,8 +66,8 @@ export const HeaderClient = ({ user }: THeaderClientProps) => {
 					</Link>
 
 					<Flex gap={4}>
-						{user && (
-							<Button colorScheme="teal" onClick={() => setOpen(true)}>
+						{user?.role === UserRole.AUTHOR && (
+							<Button colorScheme="teal" onClick={() => setIsOpen(true)}>
 								Create Article
 							</Button>
 						)}
@@ -76,6 +77,8 @@ export const HeaderClient = ({ user }: THeaderClientProps) => {
 						</Button>
 					</Flex>
 				</Flex>
+
+				<ArticleModal isOpen={isOpen} onClose={() => setIsOpen(false)} />
 			</Box>
 		</>
 	);
