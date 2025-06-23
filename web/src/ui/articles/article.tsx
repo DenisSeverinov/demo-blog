@@ -14,7 +14,7 @@ import Image from "next/image";
 import type { TArticle } from "@/types/article";
 import { ARTICLE_TYPE_LABELS } from "@/types/article";
 import ReactMarkdown from "react-markdown";
-import { markdownComponents } from "@/app/lib/markdown";
+import { markdownComponents } from "@/lib/markdown";
 import remarkGfm from "remark-gfm";
 
 type TArticleProps = { article: TArticle & { createdAtFormatted: string } };

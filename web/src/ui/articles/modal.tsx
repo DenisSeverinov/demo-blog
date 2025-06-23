@@ -4,11 +4,11 @@ import FormSelect from "../form-select";
 import FormFileUpload from "../form-file-upload";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { createArticleSchema } from "@/app/lib/schemas/article";
+import { createArticleSchema } from "@/lib/schemas/article";
 import { ARTICLE_TYPE_LABELS, ArticleType } from "@/types/article";
 import type { TCreateArticleForm } from "@/types/article";
-import { toaster } from "@/app/ui/toaster";
-import { createArticle } from "@/app/lib/api/article/client";
+import { toaster } from "@/ui/toaster";
+import { createArticle } from "@/lib/api/article/client";
 import { useRouter } from "next/navigation";
 
 type TArticleModalProps = {

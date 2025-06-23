@@ -27,7 +27,6 @@ export async function getArticlesPreview(query: string): Promise<TArticle[]> {
 
 export async function getArticleById(id: number): Promise<TArticle> {
 	const accessToken = await getAccessTokenFromCookies();
-
 	const res = await fetch(`${API_ROOT}/articles/${id}`, {
 		headers: accessToken
 			? {

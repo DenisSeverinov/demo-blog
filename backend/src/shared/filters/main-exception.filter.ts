@@ -1,4 +1,3 @@
-// src/shared/filters/all-exceptions.filter.ts
 import {
 	ArgumentsHost,
 	Catch,

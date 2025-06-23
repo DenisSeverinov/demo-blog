@@ -1,8 +1,8 @@
-import AuthWrapper from "@/app/ui/auth/auth-wrapper";
+import AuthWrapper from "@/ui/auth/auth-wrapper";
 import { Heading } from "@chakra-ui/react";
 import Link from "next/link";
 import styles from "./styles.module.css";
-import { Toaster } from "@/app/ui/toaster";
+import { Toaster } from "@/ui/toaster";
 
 type TAuthCardProps = {
 	title: string;

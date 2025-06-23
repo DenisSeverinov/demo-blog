@@ -1,5 +1,5 @@
-import { RegisterForm } from "@/app/ui/auth/register-form";
-import { AuthCard } from "@/app/ui/auth/auth-card";
+import { RegisterForm } from "@/ui/auth/register-form";
+import { AuthCard } from "@/ui/auth/auth-card";
 
 export default function RegisterPage() {
 	return (

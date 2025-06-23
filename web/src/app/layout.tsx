@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Provider } from "@/app/ui/provider";
+import { Provider } from "@/ui/provider";
 import { Roboto } from "next/font/google";
 
 import "./globals.css";

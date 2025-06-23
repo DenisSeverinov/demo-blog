@@ -1,5 +1,6 @@
-import { getArticleById } from "@/app/lib/api/article/server";
-import { Article } from "@/app/ui/articles/article";
+import { DATE_FORMAT } from "@/constants/date";
+import { getArticleById } from "@/lib/api/article/server";
+import { Article } from "@/ui/articles/article";
 import dayjs from "dayjs";
 
 type TArticlePageProps = { params: Promise<{ id: string }> };
@@ -10,7 +11,7 @@ export default async function ArticlePage({ params }: TArticlePageProps) {
 
 	const articleWithFormattedDate = {
 		...article,
-		createdAtFormatted: dayjs(article.createdAt).format("MMMM D, YYYY"),
+		createdAtFormatted: dayjs(article.createdAt).format(DATE_FORMAT),
 	};
 
 	return <Article article={articleWithFormattedDate} />;

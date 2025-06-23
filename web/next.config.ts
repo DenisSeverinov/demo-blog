@@ -10,6 +10,10 @@ const nextConfig: NextConfig = {
 				source: "/api/v1/:path*",
 				destination: `${process.env.API_BASE_URL}:${process.env.API_PORT}/api/v1/:path*`,
 			},
+			{
+				source: "/uploads/:path*",
+				destination: `${process.env.API_BASE_URL}:${process.env.API_PORT}/uploads/:path*`,
+			},
 		];
 	},
 };

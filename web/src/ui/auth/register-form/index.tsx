@@ -2,15 +2,15 @@
 
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { Button } from "@chakra-ui/react";
-import FormInput from "@/app/ui/form-input";
-import FormSelect from "@/app/ui/form-select";
+import FormInput from "@/ui/form-input";
+import FormSelect from "@/ui/form-select";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { registerSchema } from "@/app/lib/schemas/register";
+import { registerSchema } from "@/lib/schemas/register";
 import { UserRole, type TRegisterForm } from "@/types/auth";
-import { register as registerApi } from "@/app/lib/api/auth";
+import { register as registerApi } from "@/lib/api/auth";
 import styles from "./styles.module.css";
 import { useRouter } from "next/navigation";
-import { toaster } from "@/app/ui/toaster";
+import { toaster } from "@/ui/toaster";
 
 const options = [
 	{ value: UserRole.AUTHOR, label: "Author" },

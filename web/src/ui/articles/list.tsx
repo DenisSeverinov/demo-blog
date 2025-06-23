@@ -2,8 +2,9 @@ import { Box, SimpleGrid } from "@chakra-ui/react";
 import { LuSearch } from "react-icons/lu";
 import { ArticleCard } from "./card";
 import { EmptyList } from "../empty-list";
-import { getArticlesPreview } from "@/app/lib/api/article/server";
+import { getArticlesPreview } from "@/lib/api/article/server";
 import dayjs from "dayjs";
+import { DATE_FORMAT } from "@/constants/date";
 
 type TArticleListProps = { query: string };
 
@@ -27,7 +28,7 @@ export const ArticleList = async ({ query }: TArticleListProps) => {
 			{articles.map((article) => {
 				const articleWithFormattedDate = {
 					...article,
-					createdAtFormatted: dayjs(article.createdAt).format("MMMM D, YYYY"),
+					createdAtFormatted: dayjs(article.createdAt).format(DATE_FORMAT),
 				};
 
 				return (

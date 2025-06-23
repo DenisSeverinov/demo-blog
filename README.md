@@ -1,17 +1,22 @@
 # Demo Blog
 
-## Быстрый старт
+## Quick Start
 
-1. Переименуйте файл `.env.example` в `.env` в корне проекта:
+1. Copy `.env.example` files to `.env`:
    ```sh
-   mv .env.example .env
+   cp .env.example .env
+   cd backend && cp .env.example .env && cd ..
    ```
-2. Запустите проект с помощью Docker Compose:
+2. Install dependencies:
+   ```sh
+   cd backend && pnpm install && cd ../web && pnpm install && cd ..
+   ```
+3. Start the project using Docker Compose:
    ```sh
    docker-compose up --build
    ```
-3. Откройте браузер и перейдите по адресу: [http://localhost:3000](http://localhost:3000)
+4. Open your browser and navigate to: [http://localhost:3000](http://localhost:3000)
 
-## Структура проекта
-- `backend/` — серверная часть (Nest.js)
-- `web/` — клиентская часть (Next.js)
+## Project Structure
+- `backend/` — server-side (Nest.js)
+- `web/` — client-side (Next.js)

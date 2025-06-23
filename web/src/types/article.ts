@@ -1,6 +1,6 @@
 import type { TUser } from "./auth";
 import type { z } from "zod";
-import type { createArticleSchema } from "@/app/lib/schemas/article";
+import type { createArticleSchema } from "@/lib/schemas/article";
 
 export type TCreateArticleForm = z.infer<typeof createArticleSchema>;
 

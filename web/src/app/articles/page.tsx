@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import { Box, Heading } from "@chakra-ui/react";
 
-import { SearchBox } from "../ui/articles/search-box";
-import { ArticleList } from "@/app/ui/articles/list";
+import { SearchBox } from "../../ui/articles/search-box";
+import { ArticleList } from "@/ui/articles/list";
 import { Suspense } from "react";
-import { ArticlesSkeleton } from "../ui/articles/skeleton";
+import { ArticlesSkeleton } from "../../ui/articles/skeleton";
 
 export const metadata: Metadata = {
 	title: "Articles | Demo Blog",

@@ -1,6 +1,6 @@
 import type { z } from "zod";
-import type { loginSchema } from "@/app/lib/schemas/login";
-import type { registerSchema } from "@/app/lib/schemas/register";
+import type { loginSchema } from "@/lib/schemas/login";
+import type { registerSchema } from "@/lib/schemas/register";
 import type { TArticle } from "./article";
 
 export type TLoginForm = z.infer<typeof loginSchema>;

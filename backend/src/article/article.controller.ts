@@ -20,6 +20,7 @@ import { JwtAuthGuard } from "src/auth/guards/jwt.guard";
 import { User } from "src/shared/decorators/user.decorator";
 import { FILE_SIZE_LIMIT } from "./article.constants";
 import { JwtPayload } from "src/auth/dto/auth.dto";
+import { ArticlePreviewDto } from "./dto/article-preview.dto";
 
 @Controller("articles")
 export class ArticleController {
@@ -56,8 +57,12 @@ export class ArticleController {
 
 	@Get("preview")
 	@UseGuards(JwtAuthGuard)
-	findAllPreview(@Query("search") search: string) {
-		return this.articleService.findAllPreview(search);
+	async findAllPreview(
+		@Query("search") search: string,
+	): Promise<ArticlePreviewDto[]> {
+		return new ArticlePreviewDto().arrayFrom(
+			await this.articleService.findAllPreview(search),
+		);
 	}
 
 	@Get(":id")

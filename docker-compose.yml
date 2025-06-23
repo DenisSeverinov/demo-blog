@@ -25,6 +25,7 @@ services:
       - .env
     volumes:
       - ./backend:/app
+      - ./backend/uploads:/app/uploads
     environment:
       - DATABASE_HOST=db
     depends_on:

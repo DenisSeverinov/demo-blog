@@ -2,14 +2,14 @@
 
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { Button } from "@chakra-ui/react";
-import FormInput from "@/app/ui/form-input";
+import FormInput from "@/ui/form-input";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { loginSchema } from "@/app/lib/schemas/login";
+import { loginSchema } from "@/lib/schemas/login";
 import type { TLoginForm } from "@/types/auth";
 import styles from "./styles.module.css";
-import { login } from "@/app/lib/api/auth";
+import { login } from "@/lib/api/auth";
 import { useRouter } from "next/navigation";
-import { toaster } from "@/app/ui/toaster";
+import { toaster } from "@/ui/toaster";
 
 export const LoginForm = () => {
 	const router = useRouter();

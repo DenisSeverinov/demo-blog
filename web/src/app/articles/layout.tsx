@@ -1,4 +1,4 @@
-import Header from "@/app/ui/header/header.server";
+import Header from "@/ui/header/header.server";
 import { Box } from "@chakra-ui/react";
 
 export default function Layout({ children }: { children: React.ReactNode }) {

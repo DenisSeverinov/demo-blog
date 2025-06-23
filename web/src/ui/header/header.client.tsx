@@ -5,10 +5,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { Box, Flex, Button } from "@chakra-ui/react";
 import { UserRole, type JwtPayload } from "@/types/auth";
-import { logout } from "@/app/lib/api/auth";
+import { logout } from "@/lib/api/auth";
 import { useRouter } from "next/navigation";
-import { toaster } from "@/app/ui/toaster";
-import { ArticleModal } from "@/app/ui/articles/modal";
+import { toaster } from "@/ui/toaster";
+import { ArticleModal } from "@/ui/articles/modal";
 
 type THeaderClientProps = { user: JwtPayload | null };
 

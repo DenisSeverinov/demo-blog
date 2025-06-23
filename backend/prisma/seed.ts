@@ -1,4 +1,3 @@
-// prisma/seed.ts
 import { PrismaClient, UserRole, ArticleType } from "@prisma/client";
 import * as bcrypt from "bcryptjs";
 import { readdirSync, readFileSync } from "node:fs";
